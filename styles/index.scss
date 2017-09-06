@@ -1,0 +1,50 @@
+.dot-component
+{
+    
+    display: inline-block;
+    background: #000;
+    width: 3px;
+    height: 3px;
+    border-radius: 3px;
+}
+
+.pattern-container
+{
+    
+    margin-top: 100px;
+    width: 400px;
+    height: 400px;
+    margin-left: 25px;
+}
+h1, h3{
+    text-align: center
+}
+.container{
+    background: #eee;
+    height: 560px;
+    margin-top: 40px;
+    box-shadow: 4px 4px 10px #888;
+}
+button{
+    display: block;
+    width: 100px;
+    height: 100px;
+    border-radius: 50px;
+    margin-top: 150px;
+    margin-left: 25px;
+}
+.info-bar
+{
+    margin-top: 140px;
+}
+
+.current-info
+{
+    margin-top: 30px;
+}
+.vr
+{
+    height: 560px;
+     width: 0; 
+    border-left: 1px solid #ddd;
+}
