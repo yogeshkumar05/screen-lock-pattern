@@ -1,19 +1,9 @@
 import React, {Component} from 'react';
+import CONSTANTS from '../common/patternConstants';
 
-export default class Header extends Component
+export default function Header(props)
 {
-    constructor(props)
-    {
-        super(props);
-        this.state={
-
-        }
-    }   
-
-    render()
-    {
         return(<h1>
-            Screen Lock Pattern
-            </h1>)
-    }
+            {CONSTANTS.MAIN_HEADER}
+        </h1>)
 }

@@ -1,18 +1,8 @@
 import React, {Component} from 'react';
 
-export default class Footer extends Component
+export default function Footer(props)
 {
-    constructor(props)
-    {
-        super(props);
-        this.state={
-
-        }
-    }   
-
-    render()
-    {
-        return(<div>
-            </div>)
-    }
+    return(<footer>
+            &copy; 2017 Screen Lock Pattern Demo by Yogesh
+        </footer>)
 }

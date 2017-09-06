@@ -6,6 +6,9 @@ import DotsContainer from './DotsContainer';
 import InfoBar from './InfoBar';
 import NavBar from './NavBar';
 import SubHeader from './SubHeader';
+import {createAction, updateAction, clearAction, startVerify, clearPatternAction} from '../action_creators/patternActions';
+import Footer from './Footer';
+import CONSTANTS from '../common/patternConstants';
 
 class Main extends Component
 {
@@ -13,26 +16,31 @@ class Main extends Component
     {
         super(props);
         this.state={
-            SubHeader:"Create Pattern"
+            SubHeader:CONSTANTS.SUBHEADER_CREATE
         }
     }
-    componentWillMount()
+
+    startVerification()
     {
-        fetchStreamingData();
+        startVerify();
+    }
+
+    clearPattern()
+    {
+        clearPatternAction();
     }
 
     componentWillReceiveProps(nextProps)
     {
-        console.log("received"+JSON.stringify(nextProps.tweets))
         if(nextProps.verify!=undefined)
             {
                 if(nextProps.verify==true)
                     {
-                        this.setState({SubHeader:"Verify Pattern"})
+                        this.setState({SubHeader:CONSTANTS.SUBHEADER_VERIFY})
                     }
                 else
                     {
-                        this.setState({SubHeader:"Create Pattern"})
+                        this.setState({SubHeader:CONSTANTS.SUBHEADER_CREATE})
                     }
             }
     }
@@ -44,7 +52,7 @@ class Main extends Component
             <div className="container">
                 <div className="row">
                     <div className="col-sm-2 col-md-2 col-lg-2 nav-section">
-                        <NavBar/>
+                        <NavBar startVerification={this.startVerification} clearPattern={this.clearPattern}/>
                     </div>
                     <div className="vr col-sm-1 col-md-1 col-lg-1"></div>
                     <div className="col-sm-6 col-md-6 col-lg-6">
@@ -57,13 +65,13 @@ class Main extends Component
                     </div>
                 </div>
             </div>
+            <hr/>
+            <Footer/>
         </div>)
     }
 }
 export default connect(state => (
     {
-        tweets: state.streamReducer.tweets,
-        count: state.streamReducer.count,
-        verify:state.streamReducer.verify
+        verify:state.patternReducer.verify
     }
 ))(Main);

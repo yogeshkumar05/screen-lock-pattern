@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import { connect } from "react-redux";
-
 class InfoBar extends Component
 {
     constructor(props)
@@ -28,17 +27,15 @@ class InfoBar extends Component
         return(<div className="info-bar">
             <div className="current-info">Current Pattern:{this.state.currentPattern}</div>
             <div className="current-info">Verify Pattern:{this.state.patternToVerify}</div>
-            <div className="current-info">{this.state.matchStatus}</div>
+            <div className="current-info"><strong>{this.state.matchStatus}</strong></div>
             </div>)
     }
 }
 export default connect(state => (
     {
-        tweets: state.streamReducer.tweets,
-        count: state.streamReducer.count,
-        currentPattern:state.streamReducer.currentPattern,
-        patternToVerify:state.streamReducer.patternToVerify,
-        matchStatus:state.streamReducer.matchStatus
+        currentPattern:state.patternReducer.currentPattern,
+        patternToVerify:state.patternReducer.patternToVerify,
+        matchStatus:state.patternReducer.matchStatus
 
     }
 ))(InfoBar);

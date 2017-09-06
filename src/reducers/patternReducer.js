@@ -1,7 +1,5 @@
+import CONSTANTS from '../common/patternConstants';
 export default function reducer(state = {
-  tweets: [],
-  error: null,
-  count: 1,//for displaying the api call number
   currentPattern:"",
   patternToVerify:"",
   verify:false,
@@ -10,20 +8,12 @@ export default function reducer(state = {
 }, action) {
 
   switch (action.type) {
-    case "FETCH_STREAM_REJECTED": {
-      return Object.assign({}, state, { error: action.payload })
-    }
-    case "FETCH_STREAM_FULFILLED": {
-      return Object.assign({}, state, { tweets: action.payload, count: action.payload.count });
-    }
     case "CREATE_PATTERN":
     {
-     // alert(state.verify)
       if(state.verify===true)
         {
           let newPattern="";
           newPattern=newPattern.concat(action.payload);
-          console.log("reducer"+newPattern)
           return Object.assign({}, state, {patternToVerify:newPattern})
         }
         else
@@ -43,7 +33,7 @@ export default function reducer(state = {
       if(state.verify==true)
         {
           let prevChar=state.patternToVerify[state.patternToVerify.length-1];
-          if(prevChar!=action.payload)//if same dot not selected consecutively
+          if(prevChar!=undefined && prevChar!=action.payload)//if same dot not selected consecutively
             {
               let newPattern=state.patternToVerify;
               newPattern=newPattern.concat(action.payload);
@@ -53,7 +43,7 @@ export default function reducer(state = {
         }
         else{
       let prevChar=state.currentPattern[state.currentPattern.length-1];
-      if(prevChar!=action.payload && state.patternEnd==false)//if same dot not selected consecutively
+      if(prevChar!=undefined && prevChar!=action.payload && state.patternEnd==false)//if same dot not selected consecutively
         {
           let newPattern=state.currentPattern;
           newPattern=newPattern.concat(action.payload);
@@ -62,14 +52,14 @@ export default function reducer(state = {
         return state;
       }
     }
-    case "CLEAR_PATTERN":
+    case "END_PATTERN":
     {
-      if(state.verify==true)
+      if(state.verify==true && state.patternToVerify.length>0)
         {
           if(state.currentPattern==state.patternToVerify)
-            return Object.assign({}, state, {matchStatus:"Patterns Match", verify:false})
+            return Object.assign({}, state, {matchStatus:CONSTANTS.PATTERN_MATCH, patternEnd:true})
           else
-            return Object.assign({}, state, {matchStatus:"Patterns Don't Match", verify:false})
+            return Object.assign({}, state, {matchStatus:CONSTANTS.PATTERN_NO_MATCH, patternEnd:true})
         }
         else
           {
@@ -77,8 +67,16 @@ export default function reducer(state = {
           }
     }
     case "VERIFY_PATTERN":{
-      //alert(action.payload)
-      return Object.assign({}, state, {verify:action.payload})
+      if(state.currentPattern.length>0)
+      return Object.assign({}, state, {verify:action.payload, patternToVerify:"", matchStatus:""})
+    }
+
+    case "CLEAR_PATTERN":{
+      return Object.assign({}, state, {currentPattern:"",
+      patternToVerify:"",
+      verify:false,
+      matchStatus:"",
+      patternEnd:false})
     }
   }
   return state

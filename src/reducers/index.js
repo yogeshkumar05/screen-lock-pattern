@@ -1,6 +1,6 @@
-import { combineReducers } from "redux"
-import streamReducer from "./streamingReducer";
+import { combineReducers } from "redux";
+import patternReducer from "./patternReducer";
 
 export default combineReducers({
-  streamReducer
+  patternReducer
 })
